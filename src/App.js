@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Button from "./components/Button";
+import Input from "./components/Input";
 
 function App() {
   // let number = 0;
@@ -16,6 +17,8 @@ function App() {
     tahunLahir: "",
   });
 
+  const [error, setError] = useState("");
+
   const klik = () => {
     // number += 1;
     setNumber(number + 1);
@@ -24,10 +27,24 @@ function App() {
 
   const handleSumbit = () => {
     // console.log(name);
-    setForm({ ...form, usia: 2022 - form.tahunLahir });
+    if (form.name === "") {
+      setError("field nama tidak boleh kosong");
+    } else if (form.tahunLahir === "") {
+      setError("field tanggal tidak boleh kosong");
+    } else {
+      setForm({ ...form, usia: 2022 - form.tahunLahir });
+    }
   };
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    setError();
+    if (e.target.name === "name") {
+      if (e.target.value.length < 3) {
+        setError("Minimal 3 karakter");
+      }
+    }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   // console.log(number);
   return (
@@ -37,22 +54,29 @@ function App() {
       <p>Aplikasi Input data diri</p>
       <br />
       Name:
-      <input
+      <Input
         type="text"
         value={form.name}
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
+        name="name"
+        // onChange={(e) => setForm({ ...form, name: e.target.value })}
+        onChange={handleChange}
       />
       <br />
       Tahun Lahir:{" "}
-      <input
+      <Input
         type="number"
         value={form.tahunLahir}
-        onChange={(e) => setForm({ ...form, tahunLahir: e.target.value })}
-      />{" "}
+        name="tahunLahir"
+        // onChange={(e) => setForm({ ...form, tahunLahir: e.target.value })}
+        handleChange={handleChange}
+        onChange={handleChange}
+      />
+      <br />
       <br />
       Umur Saya :{form.usia}
       <br />
       <Button onClick={handleSumbit}> Submit </Button>
+      <p style={{ color: "red" }}>{error}</p>
     </>
   );
 }

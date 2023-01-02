@@ -59,7 +59,7 @@ function App() {
         value={form.name}
         name="name"
         // onChange={(e) => setForm({ ...form, name: e.target.value })}
-        onChange={handleChange}
+        handleChange={handleChange}
       />
       <br />
       Tahun Lahir:{" "}
@@ -69,7 +69,7 @@ function App() {
         name="tahunLahir"
         // onChange={(e) => setForm({ ...form, tahunLahir: e.target.value })}
         handleChange={handleChange}
-        onChange={handleChange}
+        // handleChange={handleChange}
       />
       <br />
       <br />
